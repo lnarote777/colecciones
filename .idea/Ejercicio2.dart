@@ -1,6 +1,6 @@
 import 'dart:io';
 
-void main(){
+void ejercicio2(){
   List<Tarea> tareas = [];
   List<Tarea> completas = [];
   List<Tarea> pendientes = [];
