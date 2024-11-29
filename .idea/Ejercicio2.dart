@@ -18,59 +18,16 @@ void ejercicio2(){
 
     switch (opcion) {
       case "1":
-        print("Nombre de la tarea -> ");
-        var nombre = stdin.readLineSync().toString();
-
-        print("Decripcion -> ");
-        var desc = stdin.readLineSync().toString();
-
-        print("Estado (p/c) -> ");
-        var  status = stdin.readLineSync().toString().toLowerCase();
-        String estado = "pendiente";
-
-        Tarea tarea = new Tarea(nombre, desc, estado);
-
-        if (status == "p") {
-          tarea._estado = "pendiente";
-          pendientes.add(tarea);
-        } else if (status == "c") {
-          tarea._estado = "completado";
-          completas.add(tarea);
-        }else{
-          pendientes.add(tarea);
-          print("No se reconoce el caracter como un caracter válido. - El estado de la tarea se establecerá como pendiente de forma predeterminada");
-        }
-
-
-
-        tareas.add(tarea);
+        addTarea(tareas, completas, pendientes);
 
       case "2":
-        if (tareas.isEmpty){
-          print("No se encontró ninguna tarea.");
-        }else {
-          for (Tarea tarea in tareas) {
-            print(tarea.mostrar());
-          }
-        }
+        listarTodo(tareas);
 
       case "3":
-        if (completas.isEmpty){
-          print("No se encontró ninguna tarea.");
-        }else{
-          for (Tarea tarea in completas){
-            print(tarea.mostrar());
-          }
-        }
+        listarCompletas(completas);
 
       case "4":
-        if (pendientes.isEmpty){
-            print("No se encontró ninguna tarea.");
-        }else{
-          for (Tarea tarea in pendientes){
-            print(tarea.mostrar());
-          }
-        }
+        listarPendientes(pendientes);
 
       case "0":
         salir = true;
@@ -88,4 +45,60 @@ class Tarea{
   Tarea(this._nombre, this._descripcion, this._estado);
 
   String mostrar() => "Nombre: $_nombre\n\t Descripción: $_descripcion\n\t Estado: $_estado";
+}
+
+void addTarea(List<Tarea> tareas, List<Tarea> completas, List<Tarea> pendientes){
+  print("Nombre de la tarea -> ");
+  var nombre = stdin.readLineSync().toString();
+
+  print("Decripcion -> ");
+  var desc = stdin.readLineSync().toString();
+
+  print("Estado (p/c) -> ");
+  var  status = stdin.readLineSync().toString().toLowerCase();
+  String estado = "pendiente";
+
+  Tarea tarea = new Tarea(nombre, desc, estado);
+
+  if (status == "p") {
+    tarea._estado = "pendiente";
+    pendientes.add(tarea);
+  } else if (status == "c") {
+    tarea._estado = "completado";
+    completas.add(tarea);
+  }else{
+    pendientes.add(tarea);
+    print("No se reconoce el caracter como un caracter válido. - El estado de la tarea se establecerá como pendiente de forma predeterminada");
+  }
+  tareas.add(tarea);
+}
+
+void listarTodo(List<Tarea> tareas){
+  if (tareas.isEmpty){
+    print("No se encontró ninguna tarea.");
+  }else {
+    for (Tarea tarea in tareas) {
+      print(tarea.mostrar());
+    }
+  }
+}
+
+void listarPendientes(List<Tarea> pendientes){
+  if (pendientes.isEmpty){
+    print("No se encontró ninguna tarea.");
+  }else{
+    for (Tarea tarea in pendientes){
+      print(tarea.mostrar());
+    }
+  }
+}
+
+void listarCompletas(List<Tarea> completas){
+  if (completas.isEmpty){
+    print("No se encontró ninguna tarea.");
+  }else{
+    for (Tarea tarea in completas){
+      print(tarea.mostrar());
+    }
+  }
 }
