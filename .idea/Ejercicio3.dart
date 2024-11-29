@@ -40,18 +40,24 @@ class Estudiante{
 }
 
 void addEstudiante(Map<int ,Estudiante> listaEstudiantes){
-  print("Nombre del estudiante -> ");
-  var nombre = stdin.readLineSync().toString();
+  try{
+    print("Nombre del estudiante -> ");
+    var nombre = stdin.readLineSync().toString();
 
-  print("Añade las notas (ejemplo: 2, 4.5, 6, etc) -> ");
-  var notasStr = stdin.readLineSync().toString().split(", ");
-  List<double> notas = notasStr.map((e) => double.parse(e)).toList();
+    print("Añade las notas (ejemplo: 2, 4.5, 6, etc) -> ");
+    var notasStr = stdin.readLineSync().toString().split(", ");
 
-  int lastStud = listaEstudiantes.keys.last;
+    List<double> notas = notasStr.map((e) => double.parse(e)).toList();
 
-  listaEstudiantes[lastStud + 1] = Estudiante(nombre, notas);
+    int lastStud = listaEstudiantes.keys.last;
 
-  print("Estudiante añadido.");
+    listaEstudiantes[lastStud + 1] = Estudiante(nombre, notas);
+
+    print("Estudiante añadido.");
+  }on FormatException{
+    print("Formato de notas incorrecto. No se añadirá el alumno.");
+  }
+  
 }
 
 void listarEstudiantes(Map<int ,Estudiante> listaEstudiantes){
@@ -65,17 +71,21 @@ void listarEstudiantes(Map<int ,Estudiante> listaEstudiantes){
 }
 
 void listarEstudianteID(Map<int ,Estudiante> listaEstudiantes){
-  if (listaEstudiantes.isEmpty) {
-    print("No hay géneros añadidos.\n");
-  } else {
-    print("id del estudiante -> ");
-    var idstr = stdin.readLineSync().toString();
-    int id = int.parse(idstr);
+  try{
+    if (listaEstudiantes.isEmpty) {
+      print("No hay géneros añadidos.\n");
+    } else {
+      print("id del estudiante -> ");
+      var idstr = stdin.readLineSync().toString();
+      int id = int.parse(idstr);
 
-    if (listaEstudiantes.containsKey(id)){
-      listaEstudiantes[id]?.mostrar();
-    }else{
-      print("Estudiante no encontrado.\n");
+      if (listaEstudiantes.containsKey(id)) {
+        listaEstudiantes[id]?.mostrar();
+      } else {
+        print("Estudiante no encontrado.\n");
+      }
     }
+  }on FormatException{
+    print("Formato incorrecto. Introduzca un número entero.");
   }
 }
